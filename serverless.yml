@@ -27,19 +27,19 @@ functions:
     logRetentionInDays: 30
     iamRoleStatementsName: LambdaAuthRole
     iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:PutItem
-      Resource:
-        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/my-payloads-table
-  events:
-      - http:
-          path: /dynamodb/save
-          method: post
-          cors:
-            origin: "*"
-            headers:
-              - x-api-key
-            allowCredentials: true
-            # Caches on browser and proxy for 10 minutes and doesnt allow proxy to serve out of date content
-            cacheControl: "max-age=600, s-maxage=600, proxy-revalidate"
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource:
+          - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/my-payloads-table
+    events:
+        - http:
+            path: /dynamodb/save
+            method: post
+            cors:
+              origin: "*"
+              headers:
+                - x-api-key
+              allowCredentials: true
+              # Caches on browser and proxy for 10 minutes and doesnt allow proxy to serve out of date content
+              cacheControl: "max-age=600, s-maxage=600, proxy-revalidate"
