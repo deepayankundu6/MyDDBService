@@ -12,7 +12,7 @@ provider:
   stage: prod
   region: ap-south-1
   environment:
-      table_name: my-payloads-table
+      table_name: payloads_table
 
 custom:
   prune:
@@ -31,7 +31,7 @@ functions:
         Action:
           - dynamodb:PutItem
         Resource:
-          - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/my-payloads-table
+          - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/payloads_table
     events:
         - http:
             path: /dynamodb/save
