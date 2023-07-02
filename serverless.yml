@@ -20,12 +20,12 @@ custom:
     number: 3
 
 functions:
-  hello:
+  save:
     handler: handler.save_to_ddb
     memorySize: 128
     timeout: 30
     logRetentionInDays: 30
-    iamRoleStatementsName: LambdaAuthRole
+    iamRoleStatementsName: saveToDDBServiceRole
     iamRoleStatements:
       - Effect: Allow
         Action:
