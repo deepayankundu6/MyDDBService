@@ -1,0 +1,45 @@
+service: save_to_ddb
+frameworkVersion: '3'
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-prune-plugin
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: ruby2.7
+  stage: prod
+  region: ap-south-1
+  environment:
+      table_name: my-payloads-table
+
+custom:
+  prune:
+    automatic: true
+    number: 3
+
+functions:
+  hello:
+    handler: handler.save_to_ddb
+    memorySize: 128
+    timeout: 30
+    logRetentionInDays: 30
+    iamRoleStatementsName: LambdaAuthRole
+    iiamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+      Resource:
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/my-payloads-table
+events:
+    - http:
+        path: /dynamodb/save
+        method: post
+        cors:
+          origin: "*"
+          headers:
+            - x-api-key
+          allowCredentials: true
+          # Caches on browser and proxy for 10 minutes and doesnt allow proxy to serve out of date content
+          cacheControl: "max-age=600, s-maxage=600, proxy-revalidate"
