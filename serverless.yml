@@ -21,8 +21,8 @@ custom:
 
 functions:
   save:
-    handler: handler.save_to_ddb
-    memorySize: 128
+    handler: handler.my_ddb_service
+    memorySize: 256
     timeout: 30
     logRetentionInDays: 30
     iamRoleStatementsName: saveToDDBServiceRole
@@ -30,11 +30,12 @@ functions:
       - Effect: Allow
         Action:
           - dynamodb:PutItem
+          - dynamodb:GetItems
         Resource:
           - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/payloads_table
     events:
         - http:
-            path: /dynamodb/save
+            path: /dynamodb/{proxy+}
             method: post
             cors:
               origin: "*"
