@@ -32,6 +32,7 @@ functions:
           - dynamodb:PutItem
           - dynamodb:GetItems
           - dynamodb:Scan
+          - dynamodb:GetItem
         Resource:
           - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/payloads_table
     events:
