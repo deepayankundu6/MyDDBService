@@ -1,4 +1,4 @@
-service: saveToDDBService
+service: MyDDBService
 frameworkVersion: '3'
 
 plugins:
@@ -25,12 +25,13 @@ functions:
     memorySize: 256
     timeout: 30
     logRetentionInDays: 30
-    iamRoleStatementsName: saveToDDBServiceRole
+    iamRoleStatementsName: MyDDBServiceRole
     iamRoleStatements:
       - Effect: Allow
         Action:
           - dynamodb:PutItem
           - dynamodb:GetItems
+          - dynamodb:Scan
         Resource:
           - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/payloads_table
     events:
