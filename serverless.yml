@@ -21,17 +21,6 @@ custom:
   prune:
     automatic: true
     number: 3
-  dynamodb:
-    stages:
-      - ${self:provider.stage}
-    start:
-      port: 8000
-      inMemory: true
-      migrate: true
-      seed: false
-      convertEmptyValues: true
-  serverless-offline:
-    httpPort: 4000
 functions:
   - ${file(functions.yml)}
 
