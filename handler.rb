@@ -8,7 +8,7 @@ def my_ddb_service(event:, context:)
     path = event["path"]
 
     save_to_ddb(table_name, payload) if path.include? "save"
-    payload = get_item_ddb(table_name, payload["year"], payload["id"]) if path.include? "getItem"
+    payload = get_item_ddb(table_name, payload["year"], payload["unique_id"]) if path.include? "getItem"
     payload = get_items_ddb(table_name, payload["year"]) if path.include? "items"
     payload = get_ddb_table_keys(table_name) if path.include? "getKeys"
 
