@@ -57,3 +57,4 @@ node_modules
 
 # DynamoDB Local
 .dynamodb
+**metadata**

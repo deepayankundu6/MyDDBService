@@ -9,7 +9,9 @@
     "serverless-prune-plugin": "^2.0.2"
   },
   "scripts": {
-    "start": "sls dynamodb start && sls offline start --noAuth",
+    "start": "npm run-script start:dynamodb && npm run-script start:serverless",
+    "start:serverless": "sls offline start --noAuth",
+    "start:dynamodb": "java -jar .dynamodb/DynamoDBLocal.jar -sharedDb -inMemory -port 5200",
     "DDB:install":"sls dynamodb install",
     "DDB:migrate":"sls dynamodb start --migrate",
     "DDB:remove":"sls dynamodb remove"
