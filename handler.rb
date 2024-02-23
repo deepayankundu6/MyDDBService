@@ -21,7 +21,7 @@ def my_ddb_service(event:, context:)
     }
 
   rescue => error
-    puts "Some error occured while executing the lambda: #{error}"
+    puts "Some error occured while executing the lambda.: #{error}"
     {
       statusCode: 500,
       body: {
