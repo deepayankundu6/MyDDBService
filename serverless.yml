@@ -13,7 +13,7 @@ provider:
   stage: prod
   region: ap-south-1
   environment:
-      table_name: my_json_table
+      table_name: my_data_table
       table_pk: year
       table_sk: unique_id
 
