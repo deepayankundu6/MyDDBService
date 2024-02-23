@@ -1,0 +1,26 @@
+save:
+    handler: handler.my_ddb_service
+    memorySize: 256
+    timeout: 30
+    logRetentionInDays: 30
+    iamRoleStatementsName: MyDDBServiceRole
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+          - dynamodb:GetItems
+          - dynamodb:Scan
+          - dynamodb:GetItem
+        Resource:
+          - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:provider.environment.table_name}
+    events:
+        - http:
+            path: /dynamodb/{proxy+}
+            method: post
+            cors:
+              origin: "*"
+              headers:
+                - x-api-key
+              allowCredentials: true
+              # Caches on browser and proxy for 10 minutes and doesnt allow proxy to serve out of date content
+              cacheControl: "max-age=600, s-maxage=600, proxy-revalidate"

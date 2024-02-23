@@ -10,8 +10,8 @@ def save_to_ddb(table_name, body)
     table_item = {
       table_name: table_name,
         item: {
-          year:  year.year.to_s,
-          unique_id: id.to_s,
+          "#{ENV['table_pk']}":  year.year.to_s,
+          "#{ENV['table_sk']}": id.to_s,
           body: body
         }
     }
@@ -31,8 +31,8 @@ puts "Getting item with keys as #{item_pk}:#{item_sk} from the table."
     table_item = {
       table_name: table_name,
       key: {
-        year: "#{item_pk}",
-        unique_id: "#{item_sk}"
+        "#{ENV['table_pk']}": "#{item_pk}",
+        "#{ENV['table_sk']}": "#{item_sk}"
        }
     }
     response = ddb_client.get_item(table_item)
@@ -53,7 +53,7 @@ def get_items_ddb(table_name, item_pk)
       table_name: table_name,
       select: "ALL_ATTRIBUTES",
       scan_filter: {
-        year: {
+        "#{ENV['table_pk']}": {
           attribute_value_list: ["#{item_pk}"],
           comparison_operator: "EQ"
         }
@@ -76,7 +76,7 @@ def get_ddb_table_keys(table_name)
 
     table_item = {
       table_name: table_name,
-      attributes_to_get: ["year","unique_id" ]
+      attributes_to_get: ["#{ENV['table_pk']}","#{ENV['table_sk']}" ]
       }
 
     response = ddb_client.scan(table_item)
